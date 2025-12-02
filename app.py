@@ -1,4 +1,4 @@
-class data:
+class data: 
     def dataku (self, baru):
         self.baru = baru
         print(self.baru)
@@ -22,6 +22,38 @@ class akun:
             return True
         return False
     
+
+class fitur:
+    def newsong(self, playlist):
+        self.playlist = playlist
+
+    def tambah_lagu(self, lagu):
+        self.lagu = lagu
+
+    def ganti_lagu_playlist(self, list):
+        self.list = list
+
+    def delete(self,delete):
+        self.delete = delete
+
+#------------------------------------------------------------------ batas fitur
+
+    def cari_lagu(self,cari):
+        self.cari = cari
+
+    def play_song(self,play):
+        self.play = play
+
+    def pause_song(self,pause):
+        self.pause = pause
+
+    def auto_next(self,next,previous):
+        self.next = next
+        self.previous = previous
+
+    def addToPlaylist(self, Addplaylist):
+        self.Addplaylist = Addplaylist
+
 
 akun = akun()   
 
