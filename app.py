@@ -23,36 +23,111 @@ class akun:
         return False
     
 
-class fitur:
-    def newsong(self, playlist):
-        self.playlist = playlist
+class sistem_playlist:
+    def __init__(self):
+        self.playlists = {}  
+        self.max_playlist = 5
+        self.current_playlist = None
+        self.current_song_index = None
+    
+    def buat_playlist(self, nama):
+        if len(self.playlists) >= self.max_playlist:
+            print("Ibarat dari status pacar -> istri, kalau mau nambah fitur ya nambah biaya. Silahkan premiumnya :D {}")
+            return
 
-    def tambah_lagu(self, lagu):
-        self.lagu = lagu
+        if nama in self.playlists:
+            print(f"serius lu milih {nama}? dia udah ada sama yang lain bro **tertawa tapi terluka :)**")
+            return
 
-    def ganti_lagu_playlist(self, list):
-        self.list = list
+        self.playlists[nama] = []
+        print(f"Playlist '{nama}' berhasil dibuat, MANTAB!!!")
 
-    def delete(self,delete):
-        self.delete = delete
+    def hapus_playlist(self, nama):
+        if nama in self.playlists:
+            del self.playlists[nama]
+            print(f"Ibarat koruptor ingin menghapus jejaknya, Playlist '{nama}' berhasil dihapus.")
+        else:
+            print("yakin itu nama playlistnya?? ga ada bro")
 
-#------------------------------------------------------------------ batas fitur
 
-    def cari_lagu(self,cari):
-        self.cari = cari
+    def tambah_lagu(self, playlist, judul):
+        if playlist in self.playlists:
+            self.playlists[playlist].append(judul)
+            print(f"lagu judul: {judul}' ditambahkan ke playlist '{playlist}'.")
+        else:
+            print("yakin itu nama playlistnya?? ga ada bro")
 
-    def play_song(self,play):
-        self.play = play
+    def hapus_lagu(self, playlist, judul):
+        if playlist not in self.playlists:
+            print("yakin itu nama playlistnya?? ga ada bro")
+            return
 
-    def pause_song(self,pause):
-        self.pause = pause
+        if judul in self.playlists[playlist]:
+            self.playlists[playlist].remove(judul)
+            print(f"ibarat perusahaan yang ngebakar kilangnya sendiri, Lagu berjudul '{judul}' telah dihapus dari playlist '{playlist}'.")
+        else:
+            print("yakin itu nama lagunya?? ga ada bro")
 
-    def auto_next(self,next,previous):
-        self.next = next
-        self.previous = previous
+    def pilih_playlist(self, nama):
+        if nama not in self.playlists:
+            print("yakin itu nama playlistnya?? ga ada bro")
+            return False
 
-    def addToPlaylist(self, Addplaylist):
-        self.Addplaylist = Addplaylist
+        self.current_playlist = nama
+        return True
+
+    def daftar_lagu(self, playlist):
+        if playlist in self.playlists:
+            return self.playlists[playlist]
+        return []
+    
+
+class ModeMainMusik:
+    def __init__(self, playlist_manager):
+        self.pm = playlist_manager
+
+    def play(self, index):
+        self.pm.current_song_index = index
+        playlist = self.pm.current_playlist
+        lagu = self.pm.playlists[playlist][index]
+
+        while True:
+            print("===MUSIC PLAYER MODE===")
+            print(f"Now Playing : {lagu}")
+            print("1. Pause")
+            print("2. Next")
+            print("3. Previous")
+            print("0. Stop Player")
+
+            pilih = input("Pilih menu musik: ")
+
+            if pilih == "1":
+                print(f"⏸ Lagu '{lagu}' terpaused.")
+
+            elif pilih == "2":
+                if index + 1 < len(self.pm.playlists[playlist]):
+                    index += 1
+                    lagu = self.pm.playlists[playlist][index]
+                    print(f"⏭️ lanjut -> putar'{lagu}'")
+                else:
+                    print("❌ Udah ending kaya hubungan mu!")
+
+            elif pilih == "3":
+                if index - 1 >= 0:
+                    index -= 1
+                    lagu = self.pm.playlists[playlist][index]
+                    print(f"⏮️ sebelumnya -> putar '{lagu}'")
+                else:
+                    print("❌ lagu sebelumnya kosong, kaya masa lalumu yang kosong dan hampa!")
+
+            elif pilih == "0":
+                print("🛑 Menu Player ditutup....")
+                break
+
+            else:
+                print("Pilih yang tersedia aja, jangan yang lain")
+
+
 
 
 akun = akun()   
