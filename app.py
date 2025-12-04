@@ -23,9 +23,9 @@ class akun:
         return False
     
 
-class sistem_playlist:
+class sistem_playlist: 
     def __init__(self):
-        self.playlists = {}  
+        self.playlists = {}  #dictionary sebagai wadah playlist
         self.max_playlist = 5
         self.current_playlist = None
         self.current_song_index = None
@@ -39,7 +39,7 @@ class sistem_playlist:
             print(f"serius lu milih {nama}? dia udah ada sama yang lain bro **tertawa tapi terluka :)**")
             return
 
-        self.playlists[nama] = []
+        self.playlists[nama] = [] #List lagu, dianalogikan sebagai Singly Linked List
         print(f"Playlist '{nama}' berhasil dibuat, MANTAB!!!")
 
     def hapus_playlist(self, nama):
@@ -76,7 +76,7 @@ class sistem_playlist:
         self.current_playlist = nama
         return True
 
-    def daftar_lagu(self, playlist):
+    def daftar_lagu(self, playlist): #Singly Linked List
         if playlist in self.playlists:
             return self.playlists[playlist]
         return []
@@ -104,7 +104,7 @@ class ModeMainMusik:
             if pilih == "1":
                 print(f"⏸ Lagu '{lagu}' terpaused.")
 
-            elif pilih == "2":
+            elif pilih == "2":  #Queue
                 if index + 1 < len(self.pm.playlists[playlist]):
                     index += 1
                     lagu = self.pm.playlists[playlist][index]
@@ -112,7 +112,7 @@ class ModeMainMusik:
                 else:
                     print("❌ Udah ending kaya hubungan mu!")
 
-            elif pilih == "3":
+            elif pilih == "3":  #Stack
                 if index - 1 >= 0:
                     index -= 1
                     lagu = self.pm.playlists[playlist][index]
@@ -121,14 +121,11 @@ class ModeMainMusik:
                     print("❌ lagu sebelumnya kosong, kaya masa lalumu yang kosong dan hampa!")
 
             elif pilih == "0":
-                print("🛑 Menu Player ditutup....")
+                print("Menu Player ditutup....")
                 break
 
             else:
                 print("Pilih yang tersedia aja, jangan yang lain")
-
-
-
 
 akun = akun()   
 
