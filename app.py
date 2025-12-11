@@ -3,6 +3,16 @@ class data:
         self.baru = baru
         print(self.baru)
 
+class premium:
+    def __init__(self):
+        self.premium_user = None  
+
+    def aktifkan(self, username):
+        print("Premium diaktifkan untuk:", username)
+
+        if self.limit_playlist:
+            print("Limit playlist diperbesar!")
+
 
 class akun:
     def __init__(self):
@@ -39,7 +49,7 @@ class sistem_playlist:
             print(f"nama playlist dengan nama: '{nama}' sudah terpakai, cari yang lain! ")
             return
 
-        self.playlists[nama] = [] #List lagu, dianalogikan sebagai Singly Linked List
+        self.playlists[nama] = []
         print(f"Playlist '{nama}' berhasil dibuat, MANTAB!!!")
 
     def hapus_playlist(self, nama):
@@ -76,7 +86,7 @@ class sistem_playlist:
         self.current_playlist = nama
         return True
 
-    def daftar_lagu(self, playlist): #Singly Linked List
+    def daftar_lagu(self, playlist):
         if playlist in self.playlists:
             return self.playlists[playlist]
         return []
@@ -87,8 +97,24 @@ class ModeMainMusik:
         self.pm = playlist_manager
 
     def play(self, index):
-        self.pm.current_song_index = index
+
+        if self.pm.current_playlist is None:
+            print("yakin itu nama playlistnya?? ga ada bro")
+            return
+        
         playlist = self.pm.current_playlist
+        
+        # Cek playlist kosong
+        if len(self.pm.playlists[playlist]) == 0:
+            print("yakin itu nama lagunya?? ga ada bro")
+            return
+        
+        # Cek index valid
+        if index < 0 or index >= len(self.pm.playlists[playlist]):
+            print("yakin itu nama lagunya?? ga ada bro")
+            return
+
+        self.pm.current_song_index = index
         lagu = self.pm.playlists[playlist][index]
 
         while True:
@@ -104,21 +130,21 @@ class ModeMainMusik:
             if pilih == "1":
                 print(f"⏸ Lagu '{lagu}' terpaused.")
 
-            elif pilih == "2":  #Queue
+            elif pilih == "2":  #Next
                 if index + 1 < len(self.pm.playlists[playlist]):
                     index += 1
                     lagu = self.pm.playlists[playlist][index]
-                    print(f"⏭️ lanjut -> putar'{lagu}'")
+                    print(f"⏭️ lanjut -> play'{lagu}'")
                 else:
-                    print("❌ Udah ending kaya hubungan mu!")
+                    print("❌ Udah ending!")
 
-            elif pilih == "3":  #Stack
+            elif pilih == "3":  #Previous
                 if index - 1 >= 0:
                     index -= 1
                     lagu = self.pm.playlists[playlist][index]
                     print(f"⏮️ sebelumnya -> putar '{lagu}'")
                 else:
-                    print("❌ lagu sebelumnya kosong, kaya masa lalumu yang kosong dan hampa!")
+                    print("ini baru pertama woy, mau play sebelumnya gimana?")
 
             elif pilih == "0":
                 print("Menu Player ditutup....")
@@ -126,6 +152,9 @@ class ModeMainMusik:
 
             else:
                 print("Pilih yang tersedia aja, jangan yang lain")
+
+
+# -------------------------------------------------------------------------------------------------------
 
 akun = akun()   
 
@@ -137,17 +166,82 @@ pilih = input("hanya boleh pilih satu aja: ")
 username = input("Username: ")
 password = input("Password: ")
 
+logged_in = False
+
 if pilih == "1":
     if akun.admin(username, password):
         print("Awas, ADMIN telah datang!")
+        logged_in = True
     else:
         print("coba lagi bung")
 
 elif pilih == "2":
     if akun.user(username, password):   
         print("Selamat datang wahai USER!")
+        logged_in = True
     else:
         print("coba lagi bung")
 
 else:
     print("Lo milih apa wok!")
+
+# Jika login sukses, lanjutkan sistem playlist
+if logged_in:
+    sp = sistem_playlist()
+    player = ModeMainMusik(sp)
+
+    while True:
+        print("\n=== MENU PLAYLIST ===")
+        print("1. Buat Playlist")
+        print("2. Hapus Playlist")
+        print("3. Tambah Lagu")
+        print("4. Hapus Lagu")
+        print("5. Pilih Playlist")
+        print("6. Daftar Lagu Playlist")
+        print("7. Play Musik")
+        print("8. aktifkan fitur premium")
+        print("0. Keluar")
+
+        pilih = input("Pilih menu: ")
+
+        if pilih == "1":
+            nama = input("Nama playlist baru: ")
+            sp.buat_playlist(nama)
+
+        elif pilih == "2":
+            nama = input("Nama playlist yang ingin dihapus: ")
+            sp.hapus_playlist(nama)
+
+        elif pilih == "3":
+            nama = input("Nama playlist: ")
+            judul = input("Judul lagu: ")
+            sp.tambah_lagu(nama, judul)
+
+        elif pilih == "4":
+            nama = input("Nama playlist: ")
+            judul = input("Judul lagu: ")
+            sp.hapus_lagu(nama, judul)
+
+        elif pilih == "5":
+            nama = input("Nama playlist: ")
+            sp.pilih_playlist(nama)
+
+        elif pilih == "6":
+            nama = input("Nama playlist: ")
+            print(sp.daftar_lagu(nama))
+
+        elif pilih == "7":
+            index = int(input("Index lagu (mulai dari 0): "))
+            player.play(index)
+
+        elif pilih == "8":
+            if logged_in:
+                sp = sistem_playlist()
+                player = ModeMainMusik(sp)
+                p = premium()
+
+        elif pilih == "0":
+            break
+
+        else:
+            print("Pilih yang tersedia aja, jangan yang lain")
