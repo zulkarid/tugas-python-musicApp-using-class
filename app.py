@@ -32,11 +32,11 @@ class sistem_playlist:
     
     def buat_playlist(self, nama):
         if len(self.playlists) >= self.max_playlist:
-            print("Ibarat dari status pacar -> istri, kalau mau nambah fitur ya nambah biaya. Silahkan premiumnya :D {}")
+            print(" telah mencapai jumlah maximum 5 playlist, tambah premium kalau ingin tambah")
             return
 
         if nama in self.playlists:
-            print(f"serius lu milih {nama}? dia udah ada sama yang lain bro **tertawa tapi terluka :)**")
+            print(f"nama playlist dengan nama: '{nama}' sudah terpakai, cari yang lain! ")
             return
 
         self.playlists[nama] = [] #List lagu, dianalogikan sebagai Singly Linked List
@@ -45,9 +45,9 @@ class sistem_playlist:
     def hapus_playlist(self, nama):
         if nama in self.playlists:
             del self.playlists[nama]
-            print(f"Ibarat koruptor ingin menghapus jejaknya, Playlist '{nama}' berhasil dihapus.")
+            print(f"playlist: '{nama}' berhasil dihapus.")
         else:
-            print("yakin itu nama playlistnya?? ga ada bro")
+            print("yakin itu nama playlistnya?? ga ada bro!")
 
 
     def tambah_lagu(self, playlist, judul):
@@ -64,7 +64,7 @@ class sistem_playlist:
 
         if judul in self.playlists[playlist]:
             self.playlists[playlist].remove(judul)
-            print(f"ibarat perusahaan yang ngebakar kilangnya sendiri, Lagu berjudul '{judul}' telah dihapus dari playlist '{playlist}'.")
+            print(f"Lagu berjudul: '{judul}' telah dihapus dari playlist: '{playlist}'.")
         else:
             print("yakin itu nama lagunya?? ga ada bro")
 
