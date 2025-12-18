@@ -206,9 +206,9 @@ sp.playlists["Pop & rock"] = [
 
 while True:
     clear_screen()
-    print("1. Admin")
-    print("2. User")
-    print("0. Exit")
+    print("1.Saya Admin!")
+    print("2.Saya User!")
+    print("0. Keluar")
     pilih = input("Pilih: ")
 
     if pilih == "0":
@@ -224,7 +224,7 @@ while True:
 
         while logged_in:
             clear_screen()
-            print("=== ADMIN MENU ===")
+            print("ADMIN MENU:")
             print("1. Tambah Lagu")
             print("2. Hapus Lagu")
             print("3. Lihat Library")
@@ -251,15 +251,15 @@ while True:
 
             elif m == "3":
                 sp.library.tampilkan_lagu()
-                input("\nEnter untuk lanjut...")
+                input("tekan enter buat lanjut")
 
             elif m == "0":
-                print("Logout admin...")
+                print("Admin LOGOUT")
                 logged_in = False
 
             else:
                 print("Menu tidak valid.")
-                input("Enter untuk lanjut...")
+                input("tekan enter buat lanjut")
 
     # menu USER
     elif pilih == "2" and akun_obj.user(username, password):
@@ -267,7 +267,7 @@ while True:
 
         while logged_in:
             clear_screen()
-            print("=== USER MENU ===")
+            print("USER MENU:")
             print("1. Buat Playlist")
             print("2. Lihat Playlist")
             print("3. Tambah Lagu ke Playlist")
@@ -281,7 +281,7 @@ while True:
 
             elif m == "2":
                 sp.lihat_playlist()
-                input("\nEnter untuk lanjut...")
+                input("tekan enter buat lanjut")
 
             elif m == "3":
                 sp.library.tampilkan_lagu()
@@ -289,19 +289,19 @@ while True:
                 id_lagu = input("ID lagu: ")
                 judul = input("Judul lagu: ")
                 sp.tambah_lagu_playlist(playlist, id_lagu, judul)
-                input("\nEnter untuk lanjut...")
+                input("tekan enter buat lanjut")
 
             elif m == "4":
                 player.play(input("Nama playlist: "))
-                input("\nEnter untuk lanjut...")
+                input("tekan enter buat lanjut")
 
             elif m == "0":
-                print("Logout user...")
+                print("User LOGOUT")
                 logged_in = False
 
             else:
                 print("Menu tidak valid.")
-                input("Enter untuk lanjut...")
+                input("tekan enter buat lanjut")
 
     else:
         print("Login gagal.")
